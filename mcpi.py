@@ -38,9 +38,7 @@ def mc_area(N):
     for i in range(N):
         x,y = area_points()
         points.append([x,y])
-        if x*x + y*y >= 1.0:
-            continue
-        else:
+        if x*x + y*y < 1.0:
             count += 1
     
     r = count / N
@@ -55,9 +53,7 @@ def mc_area_v(N):
     for i in range(N):
         x,y = area_points()
         points.append([x,y])
-        if x*x + y*y >= 1.0:
-            continue
-        else:
+        if x*x + y*y < 1.0:
             count += 1
         r = count / (i+1)
         vals.append(r*4)
