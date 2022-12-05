@@ -15,7 +15,7 @@ Description:
 # Remove this line before submission. Make sure to uncomment your modules
 import mcpi as mc
 # import altsum
-# import Num_Integ as NI
+# import numintegrate as ni
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # User input
@@ -26,6 +26,7 @@ N = 0  # Added so N always has a defined value
 while True:
     try:
         N = int(input("N-value? "))
+        # Value must also be positive, so throw the same error if it's not.
         if (N <= 0):
             raise ValueError
         break

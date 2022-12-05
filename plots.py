@@ -18,7 +18,7 @@ Dependencies: !! Make sure to have matplotlib installed before attempting to
 
 import mcpi as mc
 # import altsum
-# import Num_Integ as NI
+# import numintegrate as ni
 
 import matplotlib.pyplot as plt
 

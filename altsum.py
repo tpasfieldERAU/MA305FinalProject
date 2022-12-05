@@ -2,24 +2,27 @@
 ===============================================================================
 Title:
 Team:
-Team Members:
-Date Due:
+Written By:
+Last Update Date: 12 / 5 / 2022
 -------------------------------------------------------------------------------
 Description:
+    Placeholder Text
 """
 
+# Split this into functions that are callable as a module please
+# Anything outside of the functions will be run when other code attempts to use
+# the module, so anything handled by main.py can be removed, such as input.
+# 
+# Also you may want to use the math.atan and math.tan methods, they could 
+# simplify some things for you
+#
+# I see that you started this though, which is awesome. Thanks!
+#   - Thomas
+
+# Imports
 from math import sqrt
-import random
 
-#------------------------------------------------------------------------------
-# PART 1. Numerical Integration
-#   Value of pi can be computed using definite integrals, implement with the
-#   trapezoid rule, Simpson's rule, and the Midpoint Rule.
-# a. Trapezoid/Simpson's Rule
-
-# b. Midpoint Rule
-
-
+# Probably move this into the description in some form
 #------------------------------------------------------------------------------
 # PART 2. Sum of Alternating Series
 #   See worksheet for details
@@ -71,9 +74,3 @@ xsumnation = (sqrt(12))*madhava(M)
 print('Approximation of pi is: ',xsumnation)
 
 #Is very accurate, gets 6 beginning digits at N = 10 and more than Spyder can display correct at N = 100
-
-#------------------------------------------------------------------------------
-# PART 3. Monte Carlo Integration
-#   Approximation through random point sampling. See worksheet for detailed
-#   description.
-
