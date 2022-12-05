@@ -1,0 +1,168 @@
+% Latex template for MA305 Project Report, Fall 2022
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage[pdftex]{color}
+\usepackage{multicol}
+\newcommand{\cred} {\textcolor{red}}
+\usepackage{fancyhdr}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule 
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+%%%%%%%%%% TITLE PAGE %%%%%%%%%%
+\begin{center}
+{\it MA305, Fall 2022  \hfill Embry-Riddle Aeronautical University
+ }\\
+		\horrule{0.5pt} \\[0.4cm]
+		\textcolor{blue}{\bf \Large  % change this
+			Analysis of Methods for the Computational Approximation of $\pi$
+			}\\
+		\horrule{2pt} \\[5cm]
+%%%%%%%%%%%%%%%%%%%%
+		Thomas Pasfield, Omar Alhomaidah, Owen Mudgett  % change this
+\\[0.4cm]
+\today % change this. To due date?
+\end{center}
+\thispagestyle{empty}
+\newpage
+\begin{abstract}
+\end{abstract}
+\tableofcontents 
+\newpage
+
+%%%%%%%%%%  %%%%%%%%%%
+\section{Introduction}\label{S:1}
+%The text of this section.
+Write a brief description (background/significance) of what the project is about. \\
+
+Pi is calculated using the methods of numerical integration, sum of alternating series, and a Monte Carlo estimator. [Needs a lot more, and this is not meant to be the topic sentence, just a general idea of what could be in this paragraph.]
+
+
+\section{Problem Statement}\label{S:2}
+%The text of this section. 
+State fully and precisely the mathematical problem.  
+Explain meaning of all symbols used. Make clear what is given and what we are looking for. 
+
+\subsection{Part I}\label{S:2.1}
+%
+Text introducing this subsection. 
+
+\subsection{Part II}\label{S:2.2}
+%
+Text introducing this subsection. 
+\subsection{Part III}\label{S:2.3}
+%
+Text introducing this subsection.
+
+\section{Method/Analysis}\label{S:3}
+%Text introducing this section
+Begin with naming or characterizing the method/approach to be used, perhaps explain the basic idea behind it, to what type of problems it applies, under what conditions, what it achieves, what are its main features, advantages, disadvantages. Justify why it is applicable to this problem, stating clearly any assumptions you need to make about the problem for the method to apply. Name some other methods/approaches one could use, and if/why your method may be preferable.
+
+\subsection{Part I}\label{S:3.1}
+Put an explanation of the methodology behind the numerical integration method here, such as where pi comes from in the integral and why.
+
+\subsection{Part II}\label{S:3.2}
+Put an explanation for how and why pi emerges from the alternating series here. The whole `arctan` component and more too.
+
+\subsection{Part III}\label{S:3.3}
+A Monte Carlo estimator is a method of approximating an explicit value using randomness. In the case of approximating pi, a uniform sample of random points will approach the ratio between the
+Pi occurs in many, many parts of geometry. The most prevalent location being the equation to find the area of a circle, $A=\pi r^2$.
+
+
+\section{Solutions/Results}\label{S:4}
+%Text introducing this section
+This section contains the presentation of your solution and results.
+Describe your implementation of the method(s) for this specific problem, any special features, numerical methods implementation  strategy, choices of any parameters, stopping criteria, etc.
+Present the results in words and plots (annotate by hand if necessary), explain what they mean. Include your code in an Appendix. 
+
+\subsection{A subsection}
+%
+Text introducing this subsection. 
+
+\subsubsection{A subsubsection}
+%
+Text introducing this subsubsection. 
+
+\subsubsection{A further subdivision}
+%
+Text introducing this subsubsection. 
+
+\section{Discussion/Conclusions}\label{S:5}
+%Text introducing this subsection
+Interpret your solution physically, what we learn from it, comment on strengths and weaknesses of the solution method, any nice features you want to brag about, possible ways to improve it (e.g. how to make it more accurate, more efficient), as appropriate.
+
+
+\begin{thebibliography}{100}
+%List the materials used in the project. e.g., books, papers, web resources, codes, etc. 	
+\bibitem{a1}  
+Heath, Michael T., Scientific Computing: An Introductory Survey, McGraw Hill, 2002.
+%
+%\bibitem{a2}
+%
+%\bibitem{a3} 
+
+\end{thebibliography}
+%\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% section Appendix %%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix 
+\setcounter{section}{0}           
+\section{Python Codes}\label{S:A}
+%
+Text introducing this appendix. Subsections and further divisions can also be used in appendices. 
+
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3 
+import math
+
+"""
+=================================================================
+MA305 - cw #: your name - date
+Purpose: Find the number of trailing zeros in factorial(n). 
+=================================================================
+"""
+
+n=input('Enter a positive integer:')
+n=int(n)
+
+count=0
+for i in range(1,n+1):
+    count += n//5**i #pow(5,i)
+
+print(' Number of trailing zeros in factorial(',n,'):', count)
+print(' Factorial (',n,')=',math.factorial(n))
+
+
+\end{lstlisting} 
+
+
+\end{document}
