@@ -10,19 +10,19 @@ Created on Fri Dec  2 14:01:44 2022
 from math import sqrt
 # i
 def f(x):
-    fx = 4*sqrt(1-x**2)
-    return fx
+    y = 4*sqrt(1-x**2)
+    return y
 # ii
-def f2(x):
-    f2x = 1/sqrt(1-x**2)
-    return f2x
+def g(x):
+    y2 = 1/sqrt(1-x**2)
+    return y2
 # Midpoint rule:
-    def mid(a,b,N,f):
-        s1=0
+    def mid(f,a,b,N):
+        mid_sum = 0
         dx = (b-a)/N
         for i in range(N):
-            x_i = a+((2*i-1)/2)*dx
-            s1+= f(x_i)
-            return s1*dx
+            xi_bar = a+(i-0.5)*dx
+            msum += f(xi_bar)
+            return mid_sum*dx
             
         
