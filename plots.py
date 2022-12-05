@@ -21,18 +21,40 @@ import mcpi as mc
 # import numintegrate as ni
 
 import matplotlib.pyplot as plt
+from math import pi
+import os
 
 # This will have much more organization later, I'm just getting something out 
 # on paper for now.
 
+imgdir = "./paper-files/images/"
 
 # This is an example comparing the area and volume methods, such as how much 
 # they fluctuate, how long they take to consistently converge, etc.
-N = 10000
+N = 100000
 mcAreaMethodVals = mc.mc_area_v(N)
 mcVolumeMethodVals = mc.mc_volume_v(N)
 
+plt.figure(0)
 plt.plot(range(1,N+1), mcAreaMethodVals)
 plt.plot(range(1,N+1), mcVolumeMethodVals)
-plt.show()
+plt.title("Value of $\\approx\pi$ as Iterations Increase")
+plt.xlabel("Iterations")
+plt.ylabel("Value")
+# plt.savefig(imgdir + "mcComp.png")
 
+plt.figure(1)
+AreaError = []
+VolError = []
+for i in mcAreaMethodVals:
+    AreaError.append((abs(pi - i) / pi) * 100)
+for i in mcVolumeMethodVals:
+    VolError.append((abs(pi - i) / pi) * 100)
+
+plt.plot(range(1,N+1), AreaError)
+plt.plot(range(1,N+1), VolError)
+plt.xscale("log")
+plt.title("Error from $\pi$ as Iterations Increases")
+plt.xlabel("Iterations")
+plt.ylabel("Error %")
+plt.show()

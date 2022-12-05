@@ -7,5 +7,3 @@ This is a repository to host our group's code for our final project for MA305 Fa
 `plots.py` generates plots of the different methods as iterations increase. Plots are also generated to provide comparisons and allow for further analysis.
 
 The wiki tab may be set up to allow easy to navigate documentation of our modules and the methods within them.
-
-LaTeX work will be in its respective folder.

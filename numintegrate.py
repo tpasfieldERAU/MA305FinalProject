@@ -17,12 +17,12 @@ def g(x):
     y2 = 1/sqrt(1-x**2)
     return y2
 # Midpoint rule:
-    def mid(f,a,b,N):
-        mid_sum = 0
-        dx = (b-a)/N
-        for i in range(N):
-            xi_bar = a+(i-0.5)*dx
-            msum += f(xi_bar)
-            return mid_sum*dx
+def mid(f,a,b,N):
+    mid_sum = 0
+    dx = (b-a)/N
+    for i in range(N):
+        xi_bar = a+(i-0.5)*dx
+        msum += f(xi_bar)
+        return mid_sum*dx
             
         
