@@ -1,63 +1,26 @@
-# TEMPORARY FILE FOR VERSION CONTROL
-# mc_volume is not correct, needs to be finished properly.
-
-# LOOK INTO NUMPY TO SPEED THINGS UP
+# Current version doesn't have proper functionality for area
+# Needs to all accept parameters
 
 """
 ===============================================================================
-Title:
-Team:
-Team Members:
-Date Due:
+Title: Monte Carlo Method for the Approximation of Pi
+Team: Team A
+Written By: Thomas Pasfield
+Last Update Date: 12 / 5 / 2022
 -------------------------------------------------------------------------------
 Description:
+    Provides two methods to approximate pi. mcarea() uses the area of a circle 
+    inside a square region, mcvolume() uses the overlap of a sphere and cone in
+    a rectangular prism shaped region.
+
+    Each function mentioned above return a double value, which is the last approximation calculated.
+
+    mcarea_v() returns an array of values reached during execution. Same with mcvolume_v().
 """
 
-import matplotlib.pyplot as plt
-import numpy as np
+# Imports
 from math import sqrt
 import random
-
-#------------------------------------------------------------------------------
-# PART 1. Numerical Integration
-#   Value of pi can be computed using definite integrals, implement with the
-#   trapezoid rule, Simpson's rule, and the Midpoint Rule.
-# a. Trapezoid/Simpson's Rule
-
-# b. Midpoint Rule
-
-
-#------------------------------------------------------------------------------
-# PART 2. Sum of Alternating Series
-#   See worksheet for details
-# a. arctan function part
-
-# b. Machin's Formula
-
-# c. Compare results, Madhava's series
-
-
-#------------------------------------------------------------------------------
-# PART 3. Monte Carlo Integration
-#   Approximation through random point sampling. See worksheet for detailed
-#   description.
-
-# Get input for `N` variable, repeat if not an int
-while True:
-    try:
-        N = int(input("N-value? "))
-        break
-    except ValueError:
-        print("Please input a positive integer.")
-        continue
-
-while True:
-    try:
-        lim = int(input("Terms to average? "))
-        break
-    except ValueError:
-        print("Please input a positive integer.")
-        continue
 
 def mc_area(N):
     # Random point generation
@@ -86,7 +49,7 @@ def vol_points():
     z = random.uniform( 0,2)
     return x,y,z
 
-def mc_volume(N):
+def mcvolume_v(N):
     points = []
     plot_vals = []
     count = 0
@@ -99,24 +62,3 @@ def mc_volume(N):
         plot_vals.append(r*8)
 
     return plot_vals
-
-# lim = 25
-lines = []
-for i in range(lim):
-    vals = mc_volume(N)
-    lines.append(vals)
-    plt.plot(vals, linewidth=1.0, linestyle='--', color='b')
-avg = [0]*N
-for line in lines:
-    for j in range(N):
-        avg[j] += line[j]
-
-for k in range(N):
-    avg[k] = avg[k] / lim
-plt.plot(avg, linewidth=2.0, linestyle='-', color='r')
-print(avg[-1])
-plt.title("Approximation of $\pi$ by Volume")
-plt.xlabel("Iterations")
-plt.ylabel("$\pi$ Value")
-plt.text(N-(N/10), 3.5, f"$\pi$ = {avg[-1]:1.5f}")
-plt.show()
