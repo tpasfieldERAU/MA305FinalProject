@@ -33,7 +33,7 @@ def simpson(f,a,b,N):
         
         if i%2 == 0:
             s_sum += 2*f(xi_bar)
-            else:
-                s_sum += 4*f(xi_bar)
-        return (dx/3)*s_sum
+        else:
+            s_sum += 4*f(xi_bar)
+    return (dx/3)*s_sum
         
