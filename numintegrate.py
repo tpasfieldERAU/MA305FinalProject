@@ -22,7 +22,18 @@ def mid(f,a,b,N):
     dx = (b-a)/N
     for i in range(N):
         xi_bar = a+(i-0.5)*dx
-        msum += f(xi_bar)
-        return mid_sum*dx
-            
+        mid_sum += f(xi_bar)
+        return dx*mid_sum
+# Simpson's 1/3rd rule:
+def simpson(f,a,b,N):
+    dx = (b-a)/N
+    s_sum = f(a) + f(b)
+    for i in range(1,N):
+        xi_bar = a+(i*dx)
+        
+        if i%2 == 0:
+            s_sum += 2*f(xi_bar)
+            else:
+                s_sum += 4*f(xi_bar)
+        return (dx/3)*s_sum
         
