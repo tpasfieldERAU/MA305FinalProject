@@ -1,12 +1,9 @@
-# Current version doesn't have proper functionality for area
-# Needs to all accept parameters
-
 """
 ===============================================================================
 Title: Monte Carlo Method for the Approximation of Pi
 Team: Team A
 Written By: Thomas Pasfield
-Last Update Date: 12 / 5 / 2022
+Last Update Date: 12 / 7 / 2022
 -------------------------------------------------------------------------------
 Description:
     Provides two methods to approximate pi. mc_area() uses the area of a circle 
@@ -25,11 +22,19 @@ from math import sqrt
 import random
 
 # AREA METHODS
+
+# Generates random values within the volume for x, and y.
+# Input: None
+# Output: 2 doubles
 def area_points():
     x = random.uniform(-1,1)
     y = random.uniform(-1,1)
     return x,y
 
+# Approximates pi using a monte carlo method by checking if points are within
+#   a circle within a square area
+# Input: N (Iteration Limit)
+# Output: pi (final approximation)
 def mc_area(N):
     # Random point generation
     points = []
@@ -44,6 +49,11 @@ def mc_area(N):
     r = count / N
     return 4 * r
 
+# Approximates pi using a monte carlo method by checking if points are within
+#   a circle within a square area. Returns the approximated value for every
+#   iteration.
+# Input: N (Iteration Limit)
+# Output: [pi_0, pi_1, ... pi_N]
 def mc_area_v(N):
     # Random point generation
     points = []
@@ -59,13 +69,23 @@ def mc_area_v(N):
         vals.append(r*4)
     return vals
 
+
+
 # VOLUME METHODS
+
+# Generates random values within the volume for x, y, and z.
+# Input: None
+# Output: 3 doubles
 def vol_points():
     x = random.uniform(-1,1)
     y = random.uniform(-1,1)
     z = random.uniform( 0,2)
     return x,y,z
 
+# Approximates pi using a monte carlo method by checking if points are within
+#   a sphere and cone intersection.
+# Input: N (Iteration Limit)
+# Output: pi (final approximation)
 def mc_volume(N):
     points = []
     count = 0
@@ -77,6 +97,11 @@ def mc_volume(N):
     r = count / N
     return r*8
 
+# Approximates pi using a monte carlo method by checking if points are within
+#   a sphere and cone intersection. Returns the approximated value for every
+#   iteration.
+# Input: N (Iteration Limit)
+# Output: [pi_0, pi_1, ... pi_N]
 def mc_volume_v(N):
     points = []
     vals = []

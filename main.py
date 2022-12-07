@@ -12,6 +12,9 @@ Description:
     Plots of these methods are generated with the accompanying plots.py file.
 """
 
+# Import Sys to allow console inputs
+from sys import argv
+
 # Remove this line before submission. Make sure to uncomment your modules
 import mcpi as mc
 # import altsum
@@ -22,17 +25,30 @@ import mcpi as mc
 #   try: and except: are used to ensure a valid input data type. If the input
 #   is invalid, it repeats the prompt until the user inputs a valid value.
 
-N = 0  # Added so N always has a defined value
-while True:
-    try:
-        N = int(input("N-value? "))
-        # Value must also be positive, so throw the same error if it's not.
-        if (N <= 0):
-            raise ValueError
-        break
-    except ValueError:
-        print("Please input a positive integer. ")
-        continue
+def userInput():
+    N = 0  # Added so N always has a defined value
+    while True:
+        try:
+            N = int(input("N-value? "))
+            # Value must also be positive, so throw the same error if it's not.
+            if (N <= 0):
+                raise ValueError
+            break
+        except ValueError:
+            print("Please input a positive integer. ")
+            continue
+        
+if len(argv) < 2:
+    userInput()
+else:
+    while True:
+        try:
+            N = int(argv[1])
+            break
+        except ValueError:
+            print("Run parameter invalid, please correct.")
+            userInput()
+            continue
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

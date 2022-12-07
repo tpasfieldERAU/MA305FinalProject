@@ -72,7 +72,7 @@ plt.plot(range(1,N+1), areaNums)
 plt.plot(range(1,N+1), volNums)
 
 # Renders a line into the plot representing the value of pi provided by math.pi
-plt.plot(range(1,N+1), pi_array, linestyle="dotted", color="b", linewidth=1)
+plt.plot(range(1,N+1), pi_array, linestyle="dotted", color="C0", linewidth=1)
 
 plt.title("Calculated Value of $\pi$ as Iterations Increase")
 plt.xlabel("Iterations")
