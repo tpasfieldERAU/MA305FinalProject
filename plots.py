@@ -77,12 +77,13 @@ plt.plot(range(1,N+1), pi_array, linestyle="dotted", color="C0", linewidth=1)
 plt.title("Calculated Value of $\pi$ as Iterations Increase")
 plt.xlabel("Iterations")
 plt.ylabel("Value")
+plt.legend(["Area Method", "Volume Method"])
 
 # Experimenting with different axis scaling to better convey convergence?
 plt.xscale("log")
 
 # Save figure to folder, as demonstrated in the first section above
-# plt.savefig(imgdir + "mcComp" + ".png")
+plt.savefig(imgdir + "mcComp1" + ".png")
 
 # --- Comparisons of Error of same run as MC_1 ---
 plt.figure("MC_1_err")
@@ -105,11 +106,64 @@ plt.plot(range(1,N+1), VolError)
 # is "fast-forwarded" because less info is conveyed
 plt.xscale("log")
 
-plt.title("Error from $\pi$ as Iterations Increases")
+plt.title("Error from True $\pi$ as Iterations Increases")
 plt.xlabel("Iterations")
 plt.ylabel("Error %")
+plt.legend(["Area Method", "Volume Method"])
 
-# plt.savefig(imgdir + "mcCompErr" + ".png")
+plt.savefig(imgdir + "mcCompErr1" + ".png")
+
+# --- Duplicate of Last Two, Used to Demonstrate Random Nature of MC Methods --
+
+areaNums = mc.mc_area_v(N)
+volNums = mc.mc_volume_v(N)
+
+plt.figure("MC_2")
+plt.plot(range(1,N+1), areaNums)
+plt.plot(range(1,N+1), volNums)
+
+# Renders a line into the plot representing the value of pi provided by math.pi
+plt.plot(range(1,N+1), pi_array, linestyle="dotted", color="C0", linewidth=1)
+
+plt.title("Calculated Value of $\pi$ as Iterations Increase")
+plt.xlabel("Iterations")
+plt.ylabel("Value")
+plt.legend(["Area Method", "Volume Method"])
+
+# Experimenting with different axis scaling to better convey convergence?
+plt.xscale("log")
+
+# Save figure to folder, as demonstrated in the first section above
+plt.savefig(imgdir + "mcComp2" + ".png")
+
+# --- Comparisons of Error of same run as MC_1 ---
+plt.figure("MC_2_err")
+
+# Lists containing error vals
+AreaError = []
+VolError = []
+
+# May change this to be a single loop and indexing instead of instantiating
+for i in areaNums:
+    AreaError.append((abs(pi - i) / pi) * 100)
+for i in volNums:
+    VolError.append((abs(pi - i) / pi) * 100)
+
+plt.plot(range(1,N+1), AreaError)
+plt.plot(range(1,N+1), VolError)
+
+# Experimental scale again
+# This scale highlights changes early on, while the later, lower variation data
+# is "fast-forwarded" because less info is conveyed
+plt.xscale("log")
+
+plt.title("Error from True $\pi$ as Iterations Increases")
+plt.xlabel("Iterations")
+plt.ylabel("Error %")
+plt.legend(["Area Method", "Volume Method"])
+
+plt.savefig(imgdir + "mcCompErr2" + ".png")
+
 
 # --- Show average of {samples} runs of the area method to N iterations ---
 
@@ -128,7 +182,14 @@ for i in range(N):
 plt.figure("AreaAvg")
 for plot in areas:
     plt.plot(range(1,N+1), plot, color="C0", alpha=0.2, linewidth=1)
-plt.plot(range(1,N+1), sums, color='C1', linewidth=2)
+avg, = plt.plot(range(1,N+1), sums, color='C1', linewidth=2)
+avg.set_label("Average Value")
+
+plt.title(f"Average of {samples} mc_area() runs")
+plt.xlabel("Iterations")
+plt.ylabel("Value")
+plt.legend()
+plt.savefig(imgdir + "areaAvg" + ".png")
 
 # --- Show average of {samples} runs of the vol method to N iterations ---
 
@@ -147,9 +208,18 @@ for i in range(N):
 plt.figure("VolAvg")
 for plot in areas:
     plt.plot(range(1,N+1), plot, color="C0", alpha=0.2, linewidth=1)
-plt.plot(range(1,N+1), sums, color='C1', linewidth=2)
+avg, = plt.plot(range(1,N+1), sums, color='C1', linewidth=2)
+avg.set_label("Average Value")
+
+plt.title(f"Average of {samples} mc_volume() runs")
+plt.xlabel("Iterations")
+plt.ylabel("Value")
+plt.legend()
+
+plt.savefig(imgdir + "volAvg" + ".png")
+
 # Shows all figures generated so far, uncomment to use.
-plt.show()
+# plt.show()
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
