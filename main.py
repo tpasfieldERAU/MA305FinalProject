@@ -3,7 +3,7 @@
 Title: Examples of Computational Methods for the Approximation of Pi
 Team: Team A
 Written By: Thomas Pasfield, Omar Alhomaidah, Owen Mudgett
-Last Update Date: 12 / 5 / 2022
+Last Update Date: 12 / 7 / 2022
 -------------------------------------------------------------------------------
 Description:
     This script provides and compares different methods for calculating the 
@@ -25,8 +25,9 @@ import mcpi as mc
 #   try: and except: are used to ensure a valid input data type. If the input
 #   is invalid, it repeats the prompt until the user inputs a valid value.
 
+N = 0  # Added so N always has a defined value
 def userInput():
-    N = 0  # Added so N always has a defined value
+    global N  # N exists outside of function, needs to be global to execute.
     while True:
         try:
             N = int(input("N-value? "))
@@ -48,8 +49,7 @@ else:
         except ValueError:
             print("Run parameter invalid, please correct.")
             userInput()
-            continue
-
+            break
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Part 1. Numerical Integration

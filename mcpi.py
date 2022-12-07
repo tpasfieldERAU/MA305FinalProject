@@ -18,7 +18,6 @@ Description:
 """
 
 # Imports
-from math import sqrt
 import random
 
 # AREA METHODS
@@ -37,12 +36,10 @@ def area_points():
 # Output: pi (final approximation)
 def mc_area(N):
     # Random point generation
-    points = []
     count = 0
 
     for i in range(N):
         x,y = area_points()
-        points.append([x,y])
         if x*x + y*y < 1.0:
             count += 1
     
@@ -56,13 +53,11 @@ def mc_area(N):
 # Output: [pi_0, pi_1, ... pi_N]
 def mc_area_v(N):
     # Random point generation
-    points = []
     vals = []
     count = 0
 
     for i in range(N):
         x,y = area_points()
-        points.append([x,y])
         if x*x + y*y < 1.0:
             count += 1
         r = count / (i+1)
@@ -87,11 +82,9 @@ def vol_points():
 # Input: N (Iteration Limit)
 # Output: pi (final approximation)
 def mc_volume(N):
-    points = []
     count = 0
     for i in range(N):
         x,y,z = vol_points()
-        points.append([x,y,z])
         if x*x + y*y < z*z and x*x + y*y + (z-1)**2 < 1:
             count += 1
     r = count / N
@@ -103,12 +96,10 @@ def mc_volume(N):
 # Input: N (Iteration Limit)
 # Output: [pi_0, pi_1, ... pi_N]
 def mc_volume_v(N):
-    points = []
     vals = []
     count = 0
     for i in range(N):
         x,y,z = vol_points()
-        points.append([x,y,z])
         if x*x + y*y < z*z and x**2 + y**2 + (z-1)**2 < 1:
             count += 1
         r = count / (i+1) 
