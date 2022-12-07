@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import mcpi as mc
 import time
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 ===============================================================================
 Title: Examples of Computational Methods for the Approximation of Pi

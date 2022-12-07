@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 ===============================================================================
 Title: Plots to Compare Approximation Methods of Pi
