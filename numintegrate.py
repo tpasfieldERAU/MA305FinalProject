@@ -6,7 +6,7 @@ Created on Fri Dec  2 14:01:44 2022
 @author: alhomaio
 """
 #Part 1: Numerical Integration
-#import numpy as np
+import numpy as np
 from math import sqrt
 # i
 def f(x):
