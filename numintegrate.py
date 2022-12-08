@@ -17,13 +17,13 @@ def g(x):
     y2 = 1/sqrt(1-x**2)
     return y2
 # Midpoint rule:
-def mid(f,a,b,N):
-    mid_sum = 0
+def mid(f, a, b, N):
     dx = (b-a)/N
+    m_sum = 0
     for i in range(N):
-        xi_bar = a+(i-0.5)*dx
-        mid_sum += f(xi_bar)
-        return dx*mid_sum
+        m_sum += f((a + dx/2) + i*dx)
+    m_sum *= dx
+    return m_sum
 # Simpson's 1/3rd rule:
 def simpson(f,a,b,N):
     dx = (b-a)/N
@@ -36,6 +36,15 @@ def simpson(f,a,b,N):
         else:
             s_sum += 4*f(xi_bar)
     return (dx/3)*s_sum
+# Trapezoid rule:
+def trap(f,a,b,N):
+    dx = (b-a)/N
+    t_sum = f(a) + f(b)
+    for i in range(1,N):
+        xi_bar = a+(i*dx)
+        
+        t_sum += 2*f(xi_bar)
+    return (dx/2)*t_sum
         
 #########################################################################
     #Error calculation
