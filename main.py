@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# TODO Eq. 2 for Intergration Method having invalid returns.
 """
 ===============================================================================
 Title: Examples of Computational Methods for the Approximation of Pi
@@ -19,7 +20,7 @@ from sys import argv
 # Remove this line before submission. Make sure to uncomment your modules
 import mcpi as mc
 # import altsum
-# import numintegrate as ni
+import numintegrate as ni
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # User input
@@ -57,8 +58,46 @@ else:
 #   a. The Trapezoid Rule
 #   b. The Midpoint Rule
 
-# Please add an implemention of your module here, using N as the input parameter
+print("--------------------------------------------------------")
+print("Numerical Integration Method with Equation `i.`")
+print("  LaTeX:  \int_0^1 4\sqrt{1 - x^2}dx")
+print("--------------------------------------------------------")
+print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
+i = 0
+while 2**i < N:
+    n = 2**i
+    mid = ni.midpoint_int(ni.f, 0, 1, n)
+    simp = ni.simpson_int(ni.f, 0, 1, n)
+    trap = ni.trapezoid_int(ni.f, 0, 1, n)
+    
+    print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
+    i += 1
 
+final = ni.midpoint_int(ni.f, 0, 1, N)
+print(f"{N:8}\t{final:1.12f}")
+# print("------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
+
+print()
+print("--------------------------------------------------------")
+print("Numerical Integration Method with Equation `ii.`")
+print("  LaTeX:  \int_{-1}^1 \\frac{1}{\sqrt{1 - x^2}}dx")
+print("--------------------------------------------------------")
+print("       N\tpi")
+i = 0
+while 2**i < N:
+    n = 2**i
+    mid = ni.midpoint_int(ni.g, 0, 1, n)
+    simp = ni.simpson_int(ni.g, 0, 1, n)
+    trap = ni.trapezoid_int(ni.g, 0, 1, n)
+    
+    print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
+    i += 1
+
+final = ni.midpoint_int(ni.g, 0, 1, N)
+print(f"{N:8}\t{final:1.12f}")
+# print("------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Part 2. Sum of Alternating Series
