@@ -101,6 +101,10 @@ print(f"{N:8}\t{final:1.12f}")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # PART 2. Sum of Alternating Series
+
+from math import sqrt
+import random
+
 # a. arctan function part
 def arctan(x,N):
     xsum=0
