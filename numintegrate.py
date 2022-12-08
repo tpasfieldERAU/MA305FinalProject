@@ -37,3 +37,56 @@ def simpson(f,a,b,N):
             s_sum += 4*f(xi_bar)
     return (dx/3)*s_sum
         
+#########################################################################
+    #Error calculation
+if __name__=='__main__':
+   def abs_err(approximate,exact):
+        error1 = abs(approximate-exact)
+        return error1
+   def ex_err(approximate,exact):
+        error2 = abs((approximate-exact)/exact)*100
+        return error2
+
+
+for i in range(10):    
+   # Limits of integration
+   a=0
+   b=1 
+
+   # Exact value of the integral
+   exact= np.pi # exact integral of f(x) 
+   N = 10**i
+   # Evaluate the approximate value of the integral using different methods
+   approx1=mid(f,a,b,N)
+   approx2 = trap(f,a, b, N)
+   approx3 = simpson(f,a, b, N)
+
+   # Compute the absolute errors
+   abs_error1=abs_err(approx1,exact)
+   rel_error1=ex_err(approx1,exact)
+   abs_error2=abs_err(approx2,exact)
+   rel_error2=ex_err(approx2,exact)
+   abs_error3=abs_err(approx3,exact)
+   rel_error3=ex_err(approx3,exact)
+   print(N)
+   print()
+   print("Results using n={} sub-intervals:".format(N))
+   print("=============================================")
+   print("                 Approximation       Error")
+   print("   Midpoint: \t {0:12.10f}\t {1:12.10f}".format(approx1, abs_error1))
+   print("   Simpson: \t {0:12.10f}\t {1:12.10f}".format(approx2, abs_error2))
+   print("   Trapezoid: \t {0:12.10f}\t {1:12.10f}".format(approx3, abs_error3))
+   print("=============================================")
+   print()
+################################
+   # print("Integration result by Midpoint method is: %0.6f" % (approx1) )
+   # print("Absolute Error is: %0.6f" % (abs_error1))
+   # print("Relative Error is: %0.6f" % (rel_error1))
+   # print()
+   # print("Integration result by impson's 1/3rd method is: %0.6f" % (approx2) )
+   # print("Absolute Error is: %0.6f" % (abs_error2))
+   # print("Relative Error is: %0.6f" % (rel_error2))
+   # print()
+   # print("Integration result by Trapezoidal method is: %0.6f" % (approx3) )
+   # print("Absolute Error is: %0.6f" % (abs_error3))
+   # print("Relative Error is: %0.6f" % (rel_error3))
