@@ -66,15 +66,15 @@ print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
 i = 0
 while 2**i < N:
     n = 2**i
-    mid = ni.midpoint_int(ni.f, 0, 1, n)
-    simp = ni.simpson_int(ni.f, 0, 1, n)
-    trap = ni.trapezoid_int(ni.f, 0, 1, n)
+    mid = ni.midpoint_int(ni.f, 0.0, 1.0, n)
+    simp = ni.simpson_int(ni.f, 0.0, 1.0, n)
+    trap = ni.trapezoid_int(ni.f, 0.0, 1.0, n)
     
     print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
     i += 1
 
-final = ni.midpoint_int(ni.f, 0, 1, N)
-print(f"{N:8}\t{final:1.12f}")
+final = [ni.midpoint_int(ni.f, 0, 1, N), ni.simpson_int(ni.f, 0, 1, N), ni.trapezoid_int(ni.f, 0, 1, N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
 # print("------------------------")
 # print(f"pi = {final:1.16f}, calculated with {N} iterations.")
 
@@ -83,21 +83,23 @@ print("--------------------------------------------------------")
 print("Numerical Integration Method with Equation `ii.`")
 print("  LaTeX:  \int_{-1}^1 \\frac{1}{\sqrt{1 - x^2}}dx")
 print("--------------------------------------------------------")
-print("       N\tpi")
+print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
 i = 0
 while 2**i < N:
     n = 2**i
-    mid = ni.midpoint_int(ni.g, 0, 1, n)
-    simp = ni.simpson_int(ni.g, 0, 1, n)
-    trap = ni.trapezoid_int(ni.g, 0, 1, n)
+    mid = ni.midpoint_int(ni.g, -1.0, 1.0, n)
+    simp = ni.simpson_int(ni.g, -1.0, 1.0, n)
+    trap = ni.trapezoid_int(ni.g, -1.0, 1.0, n)
     
     print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
     i += 1
 
-final = ni.midpoint_int(ni.g, 0, 1, N)
-print(f"{N:8}\t{final:1.12f}")
+final = [ni.midpoint_int(ni.g, -1, 1, N), ni.simpson_int(ni.g, -1, 1, N), ni.trapezoid_int(ni.g, -1, 1, N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
 # print("------------------------")
 # print(f"pi = {final:1.16f}, calculated with {N} iterations.")
+
+print()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Part 2. Sum of Alternating Series
