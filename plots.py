@@ -47,8 +47,39 @@ pi_array = [pi] * N
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Plots of Numerical Intergration Methods
+from math import pi, cos, sin, sqrt
+from matplotlib import pyplot as plt
+
+def f(x):
+    y = 4*sqrt(1-x**2)
+    return y
+# def f(x):
+def simpson(f,a,b,N):
+    dx = (b-a)/N
+    s_sum = f(a) + f(b)
+    for i in range(1,N):
+        xi_bar = a+(i*dx)
+        
+        if i%2 == 0:
+            s_sum += 2*f(xi_bar)
+        else:
+            s_sum += 4*f(xi_bar)
+    return (dx/3)*s_sum
+
+diff = {}
+exact = pi
+for i in range(1, 100):
+    result = simpson(f,0, 1, i)
+    diff[i] = abs(exact - result)   
 
 
+sort = sorted(diff.items())
+x,y = zip(*sort)
+plt.autoscale()
+plt.loglog(x,y)
+plt.xlabel("n")
+plt.ylabel("Error")
+plt.show()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Plots of Alternating Sum Methods
 
