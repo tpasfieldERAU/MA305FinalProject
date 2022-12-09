@@ -19,8 +19,8 @@ Dependencies: !! Make sure to have matplotlib installed before attempting to
 
 # Import Student-Made Modules
 import mcpi as mc
-# import altsum
-# import numintegrate as ni
+import altsum
+import numintegrate as ni
 
 # Import Python Standard Modules
 import matplotlib.pyplot as plt
@@ -47,29 +47,10 @@ pi_array = [pi] * N
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Plots of Numerical Intergration Methods
-from math import pi, cos, sin, sqrt
-from matplotlib import pyplot as plt
-
-def f(x):
-    y = 4*sqrt(1-x**2)
-    return y
-# def f(x):
-def simpson(f,a,b,N):
-    dx = (b-a)/N
-    s_sum = f(a) + f(b)
-    for i in range(1,N):
-        xi_bar = a+(i*dx)
-        
-        if i%2 == 0:
-            s_sum += 2*f(xi_bar)
-        else:
-            s_sum += 4*f(xi_bar)
-    return (dx/3)*s_sum
-
 diff = {}
 exact = pi
 for i in range(1, 100):
-    result = simpson(f,0, 1, i)
+    result = ni.simpson_int(ni.f, 0, 1, i)
     diff[i] = abs(exact - result)   
 
 
@@ -79,7 +60,7 @@ plt.autoscale()
 plt.loglog(x,y)
 plt.xlabel("n")
 plt.ylabel("Error")
-plt.show()
+# plt.show()
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Plots of Alternating Sum Methods
 
@@ -261,3 +242,35 @@ plt.savefig(imgdir + "volAvg" + ".png")
 #       value is reached.
 #   - Comparison of error %s
 #   - Possibly compare execution time for N iterations?
+
+N = 1000
+mid = []
+simp = []
+trap = []
+arc = []
+mac = []
+mad = []
+for i in range(1,N):
+    mid.append(ni.midpoint_int(ni.f, 0, 1, i))
+    simp.append(ni.simpson_int(ni.f, 0, 1, i))
+    trap.append(ni.trapezoid_int(ni.f, 0, 1, i))
+    arc.append(4*altsum.arctan(1, i))
+    mac.append(altsum.machine(i))
+    mad.append(altsum.madhava(i))
+area = mc.mc_area_v(N-1)
+vol = mc.mc_volume_v(N-1)
+
+xs = range(1,N)
+
+fig = plt.figure("ALL")
+plt.plot(xs, mid, color="C0")
+plt.plot(xs, simp, color="C1")
+plt.plot(xs, trap, color="C2")
+plt.plot(xs, arc, color="C3")
+plt.plot(xs, mac, color="C4")
+plt.plot(xs, mad, color="C5")
+plt.plot(xs, area, color="C0")
+plt.plot(xs, vol, color="C1")
+plt.ylim((2,4))
+fig.show()
+fig.waitforbuttonpress()
