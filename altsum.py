@@ -1,31 +1,36 @@
 """
 ===============================================================================
-Title:
-Team:
-Written By:
-Last Update Date: 12 / 5 / 2022
+Title: Sum of Alternating Series Methods to Calculate Pi
+Team: Team A
+Written By: Owen Mudgett
+Last Update Date: 12 / 9 / 2022
 -------------------------------------------------------------------------------
 Description:
-    Placeholder Text
+    Approximates pi using an alternating series definition of arctan. Three
+    methods are used, including just arctan, Machin's Formula, and Madhava's
+    Series.
+    
+    arctan(x, N):
+        This method takes x as the input, and N as the iteration limit for
+        calculating the arctan of that input.
+        
+    machine(N):
+        Input N is iteration limit to be fed into arctans.
+        Computes pi using two arctans in a formula.
+        See https://en.wikipedia.org/wiki/Machin-like_formula for general info
+            about how this method works
+            
+    madhava(N):
+        Series method for calculating pi without an trig operations.
+        Accepts N as input for iteration limit.
+        https://en.wikipedia.org/wiki/Madhava_series
+            Add `#Another_formula_for_the_circumference_of_a_circle` to 
+            navigatev directly to the proper section of the article.
 """
-
-# Split this into functions that are callable as a module please
-# Anything outside of the functions will be run when other code attempts to use
-# the module, so anything handled by main.py can be removed, such as input.
-# 
-# Also you may want to use the math.atan and math.tan methods, they could 
-# simplify some things for you
-#
-# I see that you started this though, which is awesome. Thanks!
-#   - Thomas
 
 # Imports
 from math import sqrt
 
-# Probably move this into the description in some form
-#------------------------------------------------------------------------------
-# PART 2. Sum of Alternating Series
-#   See worksheet for details
 # a. arctan function part
 def arctan(x,N):
     xsum=0
@@ -33,9 +38,16 @@ def arctan(x,N):
         i+=1
         if i > N:
             break
-        xsum+=((-1)**(i+1))*(x**(2*i-1))/(2*i-1)
-    return(xsum)
+        xsum += ((-1)**(i+1)) * (x**(2*i-1)) / (2*i-1)
+    # Removed the 4 multiplier because it needs to be general purpose
+    return xsum  
 
+# b. Machin's Formula
+def machine(N):
+    machins_pi = 16*arctan(1/5, N) - 4*arctan(1/239, N)
+    return machins_pi 
+
+# c. Madhava Series
 def madhava(N):
     xsum=0
     for i in range(N):
@@ -43,34 +55,18 @@ def madhava(N):
         if i > N:
             break
         xsum += ((-1)**(i+1))/((2*i-1)*(3**(i-1)))
-    return(xsum)
+    return sqrt(12) * xsum
 
-print('Alternating Series')
-M=input('Enter a positive integer N: ')
-M=int(M)
-y=int(1)
-xsumnation = 4 * arctan(y,M)
-print('Approximation of pi is: ',xsumnation,'\n')
-#This works, but undershoots the value by magnitude of 10^x
-#For example, N=1,000,000 will give accurate values up to the hundred thousandths digit, but will undershoot the millionths digit slightly
 
-# b. Machin's Formula
-print("Machin's Formula")
-M=input('Enter a positive integer N: ')
-M=int(M)
-y=float(0.2)
-xsumnation = 16 * arctan(y,M)
-y=float(1/239)
-xsumnation -= (4 * arctan(y,M))
-print('Approximation of pi is: ',xsumnation,'\n')
+# --- General Info ---
+# Alternating Series
+# 4 * arctan(N)
+# This works, but undershoots the value by magnitude of 10^x
+# For example, N=1,000,000 will give accurate values up to the hundred 
+#   thousandths digit, but will undershoot the millionths digit slightly
 
-#Is very accurate, getting the first 6 digits at N = 10 and above
+# Machin's Formula:
+# Is very accurate, getting the first 6 digits at N = 10 and above
 
-# c. Compare results, Madhava's series
-print("Madhava's Series")
-M=input('Enter a positive integer N: ')
-M=int(M)
-xsumnation = (sqrt(12))*madhava(M)
-print('Approximation of pi is: ',xsumnation)
-
-#Is very accurate, gets 6 beginning digits at N = 10 and more than Spyder can display correct at N = 100
+# Madhava's Series:
+# Is very accurate, gets 6 beginning digits at N = 10 and more than Spyder can display correct at N = 100

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-# TODO Eq. 2 for Intergration Method having invalid returns.
 """
 ===============================================================================
 Title: Examples of Computational Methods for the Approximation of Pi
 Team: Team A
 Written By: Thomas Pasfield, Omar Alhomaidah, Owen Mudgett
-Last Update Date: 12 / 7 / 2022
+Last Update Date: 12 / 9 / 2022
 -------------------------------------------------------------------------------
 Description:
     This script provides and compares different methods for calculating the 
@@ -19,7 +18,7 @@ from sys import argv
 
 # Remove this line before submission. Make sure to uncomment your modules
 import mcpi as mc
-# import altsum
+import altsum
 import numintegrate as ni
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,16 +51,19 @@ else:
             print("Run parameter invalid, please correct.")
             userInput()
             break
+        
+        
+        
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Part 1. Numerical Integration
 #   a. The Trapezoid Rule
 #   b. The Midpoint Rule
 
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("Numerical Integration Method with Equation `i.`")
 print("  LaTeX:  \int_0^1 4\sqrt{1 - x^2}dx")
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
 i = 0
 while 2**i < N:
@@ -75,14 +77,14 @@ while 2**i < N:
 
 final = [ni.midpoint_int(ni.f, 0, 1, N), ni.simpson_int(ni.f, 0, 1, N), ni.trapezoid_int(ni.f, 0, 1, N)]
 print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
-# print("------------------------")
+# print("--------------------------------")
 # print(f"pi = {final:1.16f}, calculated with {N} iterations.")
 
 print()
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("Numerical Integration Method with Equation `ii.`")
 print("  LaTeX:  \int_{-1}^1 \\frac{1}{\sqrt{1 - x^2}}dx")
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
 i = 0
 while 2**i < N:
@@ -96,65 +98,40 @@ while 2**i < N:
 
 final = [ni.midpoint_int(ni.g, -1, 1, N), ni.simpson_int(ni.g, -1, 1, N), ni.trapezoid_int(ni.g, -1, 1, N)]
 print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
-# print("------------------------")
+# print("--------------------------------")
 # print(f"pi = {final:1.16f}, calculated with {N} iterations.")
 
 print()
+
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # PART 2. Sum of Alternating Series
 
-from math import sqrt
-import random
+print()
+print("----------------------------------------------------------------")
+print("Alternating Series Methods")
+print("----------------------------------------------------------------")
+print("       N\tarctan      \tMachin      \tMadhava")
+i = 0
+while 2**i < N:
+    n = 2**i
+    arc = 4 * altsum.arctan(1, n)
+    machin = altsum.machine(n)
+    madhava = altsum.madhava(n)
+    
+    print(f"{2**i:8}\t{arc:1.12f}\t{machin:1.12f}\t{madhava:1.12f}")
+    i += 1
 
-# a. arctan function part
-def arctan(x,N):
-    xsum=0
-    for i in range(N):
-        i+=1
-        if i > N:
-            break
-        xsum+=((-1)**(i+1))*(x**(2*i-1))/(2*i-1)
-    return(xsum)
+final = [4*altsum.arctan(1, N), altsum.machine(N), altsum.madhava(N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
 
-def madhava(N):
-    xsum=0
-    for i in range(N):
-        i+=1
-        if i > N:
-            break
-        xsum += ((-1)**(i+1))/((2*i-1)*(3**(i-1)))
-    return(xsum)
+print()
 
-print('Alternating Series')
-M=input('Enter a positive integer N: ')
-M=int(M)
-y=int(1)
-xsumnation = 4 * arctan(y,M)
-print('Approximation of pi is: ',xsumnation,'\n')
-#This works, but undershoots the value by magnitude of 10^x
-#For example, N=1,000,000 will give accurate values up to the hundred thousandths digit, but will undershoot the millionths digit slightly
 
-# b. Machin's Formula
-print("Machin's Formula")
-M=input('Enter a positive integer N: ')
-M=int(M)
-y=float(0.2)
-xsumnation = 16 * arctan(y,M)
-y=float(1/239)
-xsumnation -= (4 * arctan(y,M))
-print('Approximation of pi is: ',xsumnation,'\n')
-
-#Is very accurate, getting the first 6 digits at N = 10 and above
-
-# c. Compare results, Madhava's series
-print("Madhava's Series")
-M=input('Enter a positive integer N: ')
-M=int(M)
-xsumnation = (sqrt(12))*madhava(M)
-print('Approximation of pi is: ',xsumnation)
-
-#Is very accurate, gets 6 beginning digits at N = 10 and more than Spyder can display correct at N = 100
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -164,9 +141,9 @@ print('Approximation of pi is: ',xsumnation)
 area_pi_iterated = mc.mc_area_v(N)
 area_pi = area_pi_iterated[-1]
 
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("Monte Carlo Method: Pi using area of a circle")
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("       N\tpi")
 i = 0
 while 2**i < N:
@@ -174,7 +151,7 @@ while 2**i < N:
     i += 1
     
 print(f"{N:8}\t{area_pi:1.5f}")
-print("------------------------")
+print("--------------------------------")
 print(f"pi = {area_pi:1.5f}, calculated with {N} iterations.")
 
 print()
@@ -182,9 +159,9 @@ print()
 #   b. Volume Method
 vol_pi_iterated = mc.mc_volume_v(N)
 vol_pi = vol_pi_iterated[-1]
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("Monte Carlo Method: Pi using Volume of Sphere & Cone")
-print("--------------------------------------------------------")
+print("----------------------------------------------------------------")
 print("       N\tpi")
 i = 0
 while 2**i < N:
@@ -192,7 +169,7 @@ while 2**i < N:
     i += 1
     
 print(f"{N:8}\t{vol_pi:1.5f}")
-print("------------------------")
+print("--------------------------------")
 print(f"pi = {vol_pi:1.5f}, calculated with {N} iterations.")
 
 print()
