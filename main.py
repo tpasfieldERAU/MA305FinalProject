@@ -140,22 +140,24 @@ print()
 
 area_pi_iterated = mc.mc_area_v(N)
 area_pi = area_pi_iterated[-1]
+vol_pi_iterated = mc.mc_volume_v(N)
+vol_pi = vol_pi_iterated[-1]
 
 print("----------------------------------------------------------------")
 print("Monte Carlo Method: Pi using area of a circle")
 print("----------------------------------------------------------------")
-print("       N\tpi")
+print("       N\tarea          \tvolume")
 i = 0
 while 2**i < N:
-    print(f"{2**i:8}\t{area_pi_iterated[2**i]:1.5f}")
+    print(f"{2**i:8}\t{area_pi_iterated[2**i]:1.12f}\t{vol_pi_iterated[2**i]:1.12f}")
     i += 1
     
-print(f"{N:8}\t{area_pi:1.5f}")
-print("--------------------------------")
-print(f"pi = {area_pi:1.5f}, calculated with {N} iterations.")
+print(f"{N:8}\t{area_pi:1.12f}\t{vol_pi:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {area_pi:1.5f}, calculated with {N} iterations.")
 
 print()
-
+"""
 #   b. Volume Method
 vol_pi_iterated = mc.mc_volume_v(N)
 vol_pi = vol_pi_iterated[-1]
@@ -173,3 +175,4 @@ print("--------------------------------")
 print(f"pi = {vol_pi:1.5f}, calculated with {N} iterations.")
 
 print()
+"""
