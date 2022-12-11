@@ -163,13 +163,42 @@ This one is faster than the other two, but takes many more iterations before it 
 \subsection{Monte Carlo Integration}\label{S:3.3}
 A Monte Carlo estimator is a method of approximating an explicit value using randomness. They are useful for getting a rough idea of an outcome, rather than getting an exact or accurate one. 
 
+\subsubsection*{Area Method}
+The ratio between the area of a circle and the area of the square bounding it equals $\pi$.
+
+\[\frac{A_{circle}}{A_{square}}=\frac{\pi r^2}{4 r^2} = \frac{\pi}{4}\]
+
+This ratio is for each unit of the total area, and is maintained when approximated using randomly distributed points within it.
+
+\subsubsection*{Volume Method}
+Like the area method, a ratio can be found relative to pi using a sphere, a cone, and a cube.
+\[\frac{(V_{sphere}-V_{cone})}{V_{cube}}=\frac{\left(\frac{4}{3}\pi r^3 - \frac{1}{3}\pi r^2 h\right)}{8r^3}=\frac{\pi}{8}\]
+
+Also like the area method, the ratio is maintained for each unit of volume, so the ratio can be multiplied by the volume of the cube, 8, to find $\pi$.
 
 \section{Solutions/Results}\label{S:4}
 %Text introducing this section
-This section contains the presentation of your solution and results.
-Describe your implementation of the method(s) for this specific problem, any special features, numerical methods implementation  strategy, choices of any parameters, stopping criteria, etc.
-Present the results in words and plots (annotate by hand if necessary), explain what they mean. Include your code in an Appendix. 
-
+% This section contains the presentation of your solution and results.
+% Describe your implementation of the method(s) for this specific problem, any special features, numerical methods implementation  strategy, choices of any parameters, stopping criteria, etc.
+% Present the results in words and plots (annotate by hand if necessary), explain what they mean. Include your code in an Appendix. 
+\begin{table}[!ht]
+    \centering
+    \makebox[\textwidth]{\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+    \hline
+        Iterations & Midpoint & Simpson's & Trapezoid & Arctan & Machin's & Madhava & Area & Volume \\ \hline
+        1 & 3.464102 & 1.333333 & 2.000000 & 4.000000 & 3.183264 & 3.464102 & 4.000000 & 4.000000 \\ \hline
+        2 & 3.259367 & 2.976068 & 2.732051 & 2.666667 & 3.140597 & 3.079201 & 4.000000 & 5.333333 \\ \hline
+        4 & 3.183929 & 3.083595 & 2.995709 & 2.895238 & 3.141592 & 3.137853 & 4.000000 & 3.200000 \\ \hline
+        8 & 3.156687 & 3.121189 & 3.089819 & 3.017072 & 3.141593 & 3.141569 & 3.111111 & 1.777778 \\ \hline
+        16 & 3.146952 & 3.134398 & 3.123253 & 3.079153 & 3.141593 & 3.141593 & 2.588235 & 1.882353 \\ \hline
+        32 & 3.143491 & 3.139052 & 3.135102 & 3.110350 & 3.141593 & 3.141593 & 2.909091 & 2.909091 \\ \hline
+        64 & 3.142265 & 3.140695 & 3.139297 & 3.125969 & 3.141593 & 3.141593 & 3.200000 & 2.830769 \\ \hline
+        128 & 3.141830 & 3.141275 & 3.140781 & 3.133780 & 3.141593 & 3.141593 & 3.162791 & 3.286822 \\ \hline
+        256 & 3.141677 & 3.141481 & 3.141306 & 3.137686 & 3.141593 & 3.141593 & 3.143969 & 3.175097 \\ \hline
+        512 & 3.141622 & 3.141553 & 3.141491 & 3.139640 & 3.141593 & 3.141593 & 3.150097 & 3.134503 \\ \hline
+        1000 & 3.141604 & 3.141578 & 3.141555 & 3.140593 & 3.141593 & 3.141593 & 3.152000 & 3.248000 \\ \hline
+    \end{tabular}}
+\end{table}
 \subsection{A subsection}
 %
 Text introducing this subsection. 
