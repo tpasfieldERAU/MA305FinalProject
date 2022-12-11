@@ -132,12 +132,36 @@ Midpoint Function:
 \]
 where $\Delta x = \frac{b - a}{n}$ and $x_i = a + i\Delta x$
 
-\subsection{Part II}\label{S:3.2}
-Put an explanation for how and why pi emerges from the alternating series here. The whole `arctan` component and more too.
+\subsubsection*{Comparison}
+ADD FIGURES \\
 
-\subsection{Part III}\label{S:3.3}
-A Monte Carlo estimator is a method of approximating an explicit value using randomness. In the case of approximating pi, a uniform sample of random points will approach the ratio between the
-Pi occurs in many, many parts of geometry. The most prevalent location being the equation to find the area of a circle, $A=\pi r^2$.
+While the trapezoidal rule uses trapezoidal approximations to estimate the definite integral, the midpoint rule uses rectangular regions to do so. Simpson's rule approximates the original function using quadratic polynomials, then it approximates the definite integral.
+When the underlying function is smooth, the trapezoidal rule does not provide an accurate number like Simpson’s or midpoint rules do. This is due to the fact that Simpson’s rule employs quadratic approximation rather than linear approximation. All three methods produce a good approximation for the integrals. Midpoint was the best approximation for our problem, then Simpson’s was very close to it and lastly trapezoid was the least accurate method.\\
+
+\subsection{Sum of Alternating Series}\label{S:3.2}
+\subsubsection*{Alternating Series}
+\[\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots \approx \Sigma_{n=1}^N(-1)^{n+1}\frac{x^{2n-1}}{2n-1}\]
+
+The first alternating sum method uses  the alternating series of arctan. Multiplying the series by 4 with an x value of 1 over N iterations approximates $\pi$. This method is fairly accurate, but has a strange interaction with N values that are exponentiations of 10. Whichever place N occupies - for example, 1000 in the thousands - the digit in the thousandths place in $\pi$ will be undershot. N = 1000 gives a $\pi$ value of 3.140592653840, which is accurate up to 3.141592653 except for the thousandths place.\\
+
+\subsubsection*{Machin's Formula}
+\[4\left(4\tan^{-1}(\frac{1}{5})-\tan^{-1}(\frac{1}{239})\right) = \pi\]
+
+The second alternating sum method uses arctan again, but twice each with different x values. John Machin created the formula in 1706, and has been widely used since then due to how fast the series converges to $\pi$ (Nishiyama). The first arctan function is multiplied by 16 and uses x = $\frac{1}{5}$, and the second arctan (subtracted from the first) is multiplied by 4 and uses x = $\frac{1}{239}$. Overall, this method is more accurate than normal 4 * arctan(1,N), but takes slightly longer.\\
+
+\subsubsection*{Madhava's Series}
+\[\sqrt{12}\left(1 - \frac{1}{3\cdot 3} + \frac{1}{5\cdot 3^2} - \frac{1}{7\cdot 3^3} + \cdots\right) = \pi\]
+
+he third alternating sum method uses what’s called Madhava’s Series, with is the square root of 12 multiplied by the the series:
+
+\[\Sigma(-1)^{n+1} / (2n-1)(3^{n-1})\]
+
+starting at n = 1.\\
+
+This one is faster than the other two, but takes many more iterations before it reaches accurate digits of $\pi$.
+
+\subsection{Monte Carlo Integration}\label{S:3.3}
+A Monte Carlo estimator is a method of approximating an explicit value using randomness. They are useful for getting a rough idea of an outcome, rather than getting an exact or accurate one. 
 
 
 \section{Solutions/Results}\label{S:4}
