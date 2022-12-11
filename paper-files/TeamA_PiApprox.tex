@@ -181,6 +181,7 @@ Also like the area method, the ratio is maintained for each unit of volume, so t
 % This section contains the presentation of your solution and results.
 % Describe your implementation of the method(s) for this specific problem, any special features, numerical methods implementation  strategy, choices of any parameters, stopping criteria, etc.
 % Present the results in words and plots (annotate by hand if necessary), explain what they mean. Include your code in an Appendix. 
+Our code outputs the following results:
 \begin{table}[!ht]
     \centering
     \makebox[\textwidth]{\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
@@ -199,27 +200,45 @@ Also like the area method, the ratio is maintained for each unit of volume, so t
         1000 & 3.141604 & 3.141578 & 3.141555 & 3.140593 & 3.141593 & 3.141593 & 3.152000 & 3.248000 \\ \hline
     \end{tabular}}
 \end{table}
-\subsection{A subsection}
 %
-Text introducing this subsection. 
-
-\subsubsection{A subsubsection}
-%
-Text introducing this subsubsection. 
-
-\subsubsection{A further subdivision}
-%
-Text introducing this subsubsection. 
 
 \section{Discussion/Conclusions}\label{S:5}
 %Text introducing this subsection
-Interpret your solution physically, what we learn from it, comment on strengths and weaknesses of the solution method, any nice features you want to brag about, possible ways to improve it (e.g. how to make it more accurate, more efficient), as appropriate.
+\begin{itemize}
+	\item Sum of Alternating Series using Machin’s Formula is the best method for calculating pi, by the metric of how many iterations are required for an extremely accurate result
+	\item All alternating series methods grow exponentially slower as iteration count rises
+	\item Integration method time seems to scale linearly with iteration count, for all methods used
+	\item Monte Carlo scales linearly, very exactly.
+
+\end{itemize}
+
+\subsection*{Numerical Integration}
+Numerical Integration is accurate with Equation i., though only achieves 4 correct digits at 1000 iterations. 
+Equation ii is not as accurate, largely due to Simpson’s Rule and Trapezoid Rule methods both requiring edge cases. The asymptotes affect calculation.
+
+\subsection*{Sum of Alternating Series}
+Methods using the sum of an alternating series achieved the value of pi to 12+ decimal places in the least time. 
+Arctan is fast but is 1/1000 off.
+Madhava’s method is slower to calculate and takes more iterations than arctan.
+Machin’s is only slightly slower than arctan but takes significantly less iterations to achieve high accuracy.
+
+\subsection*{Monte Carlo Integration}
+Monte Carlo methods have the fastest per-iteration time of all the methods, but none of the accuracy of the other methods. 
+Even running at 1,000,000 iterations cannot consistently calculate 5 digits of pi accurately. 
+Volume method takes more calculation time and is more susceptible to large jumps, while area method is faster to calculate and doesn’t stray as far from pi at any point.
+
 
 
 \begin{thebibliography}{100}
 %List the materials used in the project. e.g., books, papers, web resources, codes, etc. 	
-\bibitem{a1}  
-Heath, Michael T., Scientific Computing: An Introductory Survey, McGraw Hill, 2002.
+\bibitem{a1}
+Dawkins, Paul. Calculus II - Approximating Definite Integrals, https://tutorial.math.lamar.edu/classes/calcii/approximatingdefintegrals.aspx. 
+
+\bibitem{a2}
+Libretexts. ''1.11: Numerical Integration'' Mathematics LibreTexts, Libretexts, 22 Jan. 2022, https://math.libretexts.org
+
+\bibitem{a3}
+Nishiyama, Yutaka. “Machin’s Formula and PI - Personalpages.to.infn.it.” Machin's Formula and Pi, 2019, http://personalpages.to.infn.it/~zaninett/pdf/machin.pdf. 
 %
 %\bibitem{a2}
 %
@@ -239,28 +258,440 @@ Heath, Michael T., Scientific Computing: An Introductory Survey, McGraw Hill, 20
 Text introducing this appendix. Subsections and further divisions can also be used in appendices. 
 
 \begin{lstlisting}[language=Python]
-#!/usr/bin/env python3 
-import math
 
+#!/usr/bin/env python3
 """
-=================================================================
-MA305 - cw #: your name - date
-Purpose: Find the number of trailing zeros in factorial(n). 
-=================================================================
+===============================================================================
+Title: Examples of Computational Methods for the Approximation of Pi
+Team: Team A
+Written By: Thomas Pasfield, Omar Alhomaidah, Owen Mudgett
+Last Update Date: 12 / 9 / 2022
+-------------------------------------------------------------------------------
+Description:
+    This script provides and compares different methods for calculating the 
+    value of pi, and provides a formatted output in to the terminal.
+
+    Plots of these methods are generated with the accompanying plots.py file.
 """
 
-n=input('Enter a positive integer:')
-n=int(n)
+# Import Sys to allow console inputs
+from sys import argv
 
-count=0
-for i in range(1,n+1):
-    count += n//5**i #pow(5,i)
+# Remove this line before submission. Make sure to uncomment your modules
+import mcpi as mc
+import altsum
+import numintegrate as ni
 
-print(' Number of trailing zeros in factorial(',n,'):', count)
-print(' Factorial (',n,')=',math.factorial(n))
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# User input
+#   try: and except: are used to ensure a valid input data type. If the input
+#   is invalid, it repeats the prompt until the user inputs a valid value.
 
+N = 0  # Added so N always has a defined value
+def userInput():
+    global N  # N exists outside of function, needs to be global to execute.
+    while True:
+        try:
+            N = int(input("N-value? "))
+            # Value must also be positive, so throw the same error if it's not.
+            if (N <= 0):
+                raise ValueError
+            break
+        except ValueError:
+            print("Please input a positive integer. ")
+            continue
+        
+if len(argv) < 2:
+    userInput()
+else:
+    while True:
+        try:
+            N = int(argv[1])
+            break
+        except ValueError:
+            print("Run parameter invalid, please correct.")
+            userInput()
+            break
+        
+        
+        
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Part 1. Numerical Integration
+#   a. The Trapezoid Rule
+#   b. The Midpoint Rule
+
+print("----------------------------------------------------------------")
+print("Numerical Integration Method with Equation `i.`")
+print("  LaTeX:  \int_0^1 4\sqrt{1 - x^2}dx")
+print("----------------------------------------------------------------")
+print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
+i = 0
+while 2**i < N:
+    n = 2**i
+    mid = ni.midpoint_int(ni.f, 0.0, 1.0, n)
+    simp = ni.simpson_int(ni.f, 0.0, 1.0, n)
+    trap = ni.trapezoid_int(ni.f, 0.0, 1.0, n)
+    
+    print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
+    i += 1
+
+final = [ni.midpoint_int(ni.f, 0, 1, N), ni.simpson_int(ni.f, 0, 1, N), ni.trapezoid_int(ni.f, 0, 1, N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
+
+print()
+print("----------------------------------------------------------------")
+print("Numerical Integration Method with Equation `ii.`")
+print("  LaTeX:  \int_{-1}^1 \\frac{1}{\sqrt{1 - x^2}}dx")
+print("----------------------------------------------------------------")
+print("       N\tMidpoint     \tSimpson's    \tTrapezoid")
+i = 0
+while 2**i < N:
+    n = 2**i
+    mid = ni.midpoint_int(ni.g, -1.0, 1.0, n)
+    simp = ni.simpson_int(ni.g, -1.0, 1.0, n)
+    trap = ni.trapezoid_int(ni.g, -1.0, 1.0, n)
+    
+    print(f"{2**i:8}\t{mid:1.12f}\t{simp:1.12f}\t{trap:1.12f}")
+    i += 1
+
+final = [ni.midpoint_int(ni.g, -1, 1, N), ni.simpson_int(ni.g, -1, 1, N), ni.trapezoid_int(ni.g, -1, 1, N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
+
+print()
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# PART 2. Sum of Alternating Series
+
+print()
+print("----------------------------------------------------------------")
+print("Alternating Series Methods")
+print("----------------------------------------------------------------")
+print("       N\tarctan      \tMachin      \tMadhava")
+i = 0
+while 2**i < N:
+    n = 2**i
+    arc = 4 * altsum.arctan(1, n)
+    machin = altsum.machine(n)
+    madhava = altsum.madhava(n)
+    
+    print(f"{2**i:8}\t{arc:1.12f}\t{machin:1.12f}\t{madhava:1.12f}")
+    i += 1
+
+final = [4*altsum.arctan(1, N), altsum.machine(N), altsum.madhava(N)]
+print(f"{N:8}\t{final[0]:1.12f}\t{final[1]:1.12f}\t{final[2]:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {final:1.16f}, calculated with {N} iterations.")
+
+print()
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Part 3. Monte Carlo Integration
+#   a. Area Method
+
+area_pi_iterated = mc.mc_area_v(N)
+area_pi = area_pi_iterated[-1]
+vol_pi_iterated = mc.mc_volume_v(N)
+vol_pi = vol_pi_iterated[-1]
+
+print("----------------------------------------------------------------")
+print("Monte Carlo Method: Pi using area of a circle")
+print("----------------------------------------------------------------")
+print("       N\tarea          \tvolume")
+i = 0
+while 2**i < N:
+    print(f"{2**i:8}\t{area_pi_iterated[2**i]:1.12f}\t{vol_pi_iterated[2**i]:1.12f}")
+    i += 1
+    
+print(f"{N:8}\t{area_pi:1.12f}\t{vol_pi:1.12f}")
+# print("--------------------------------")
+# print(f"pi = {area_pi:1.5f}, calculated with {N} iterations.")
+
+print()
+"""
+#   b. Volume Method
+vol_pi_iterated = mc.mc_volume_v(N)
+vol_pi = vol_pi_iterated[-1]
+print("----------------------------------------------------------------")
+print("Monte Carlo Method: Pi using Volume of Sphere & Cone")
+print("----------------------------------------------------------------")
+print("       N\tpi")
+i = 0
+while 2**i < N:
+    print(f"{2**i:8}\t{vol_pi_iterated[2**i]:1.5f}")
+    i += 1
+    
+print(f"{N:8}\t{vol_pi:1.5f}")
+print("--------------------------------")
+print(f"pi = {vol_pi:1.5f}, calculated with {N} iterations.")
+
+print()
+"""
 
 \end{lstlisting} 
 
+\begin{lstlisting}[language=Python]
+	
+#!/usr/bin/env python3
+"""
+===============================================================================
+Title: Numerical Intergration Calculation Methods for Pi
+Team: Team A
+Written By: Omar Alhomaidah
+Last Update Date: 12 / 8 / 2022
+-------------------------------------------------------------------------------
+Description:
+"""
 
+# Imports
+from math import sqrt
+
+# Define the functions to represent the equations of the definite integrals
+# i
+def f(x):
+    y = 4.0*sqrt(1.0 - x**2)
+    return y
+# ii
+def g(x):
+    # Catches the asymptotes, doesn't let them affect calculation
+    # Edited by Thomas so it works for Simpson's and Trapezoid Rules
+    # (Blame Thomas if this is incorrect, this is written by Thomas)
+    if x**2 == 1.0:
+        return 0
+    y = 1.0/sqrt(1.0 - x**2)
+    return y
+
+
+# Integration Methods:
+# Midpoint rule:
+def midpoint_int(eq, a, b, N):
+    dx = (b-a)/N
+    m_sum = 0
+    for i in range(N):
+        m_sum += eq((a + dx/2) + i*dx)
+    m_sum *= dx
+    return m_sum
+
+# Simpson's 1/3rd rule:
+def simpson_int(eq,a,b,N):
+    dx = (b-a)/N
+    s_sum = eq(a) + eq(b)
+    for i in range(1,N):
+        xi_bar = a+(i*dx)
+        
+        if i%2 == 0:
+            s_sum += 2*eq(xi_bar)
+        else:
+            s_sum += 4*eq(xi_bar)
+    return (dx/3)*s_sum
+
+
+# Trapezoid rule:
+def trapezoid_int(eq,a,b,N):
+    dx = (b-a)/N
+    t_sum = eq(a) + eq(b)
+    for i in range(1,N):
+        xi_bar = a+(i*dx)
+        
+        t_sum += 2*eq(xi_bar)
+    return (dx/2)*t_sum
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+	
+"""
+===============================================================================
+Title: Sum of Alternating Series Methods to Calculate Pi
+Team: Team A
+Written By: Owen Mudgett
+Last Update Date: 12 / 9 / 2022
+-------------------------------------------------------------------------------
+Description:
+    Approximates pi using an alternating series definition of arctan. Three
+    methods are used, including just arctan, Machin's Formula, and Madhava's
+    Series.
+    
+    arctan(x, N):
+        This method takes x as the input, and N as the iteration limit for
+        calculating the arctan of that input.
+        
+    machine(N):
+        Input N is iteration limit to be fed into arctans.
+        Computes pi using two arctans in a formula.
+        See https://en.wikipedia.org/wiki/Machin-like_formula for general info
+            about how this method works
+            
+    madhava(N):
+        Series method for calculating pi without an trig operations.
+        Accepts N as input for iteration limit.
+        https://en.wikipedia.org/wiki/Madhava_series
+            Add `#Another_formula_for_the_circumference_of_a_circle` to 
+            navigatev directly to the proper section of the article.
+"""
+
+# Imports
+from math import sqrt
+
+# a. arctan function part
+def arctan(x,N):
+    xsum=0
+    for i in range(N):
+        i+=1
+        if i > N:
+            break
+        xsum += ((-1)**(i+1)) * (x**(2*i-1)) / (2*i-1)
+    # Removed the 4 multiplier because it needs to be general purpose
+    return xsum  
+
+# b. Machin's Formula
+def machine(N):
+    machins_pi = 16*arctan(1/5, N) - 4*arctan(1/239, N)
+    return machins_pi 
+
+# c. Madhava Series
+def madhava(N):
+    xsum=0
+    for i in range(N):
+        i+=1
+        if i > N:
+            break
+        xsum += ((-1)**(i+1))/((2*i-1)*(3**(i-1)))
+    return sqrt(12) * xsum
+
+
+# --- General Info ---
+# Alternating Series
+# 4 * arctan(N)
+# This works, but undershoots the value by magnitude of 10^x
+# For example, N=1,000,000 will give accurate values up to the hundred 
+#   thousandths digit, but will undershoot the millionths digit slightly
+
+# Machin's Formula:
+# Is very accurate, getting the first 6 digits at N = 10 and above
+
+# Madhava's Series:
+# Is very accurate, gets 6 beginning digits at N = 10 and more than Spyder can display correct at N = 100
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+	
+"""
+===============================================================================
+Title: Monte Carlo Method for the Approximation of Pi
+Team: Team A
+Written By: Thomas Pasfield
+Last Update Date: 12 / 7 / 2022
+-------------------------------------------------------------------------------
+Description:
+    Provides two methods to approximate pi. mc_area() uses the area of a circle 
+    inside a square region, mc_volume() uses the overlap of a sphere and cone in
+    a rectangular prism shaped region.
+
+    Each function mentioned above return a double value, which is the last 
+    approximation calculated.
+
+    mc_area_v() returns an array of values reached during execution. 
+    Same with mc_volume_v().
+"""
+
+# Imports
+import random
+
+# AREA METHODS
+
+# Generates random values within the volume for x, and y.
+# Input: None
+# Output: 2 doubles
+def area_points():
+    x = random.uniform(-1,1)
+    y = random.uniform(-1,1)
+    return x,y
+
+# Approximates pi using a monte carlo method by checking if points are within
+#   a circle within a square area
+# Input: N (Iteration Limit)
+# Output: pi (final approximation)
+def mc_area(N):
+    # Random point generation
+    count = 0
+
+    for i in range(N):
+        x,y = area_points()
+        if x*x + y*y < 1.0:
+            count += 1
+    
+    r = count / N
+    return 4 * r
+
+# Approximates pi using a monte carlo method by checking if points are within
+#   a circle within a square area. Returns the approximated value for every
+#   iteration.
+# Input: N (Iteration Limit)
+# Output: [pi_0, pi_1, ... pi_N]
+def mc_area_v(N):
+    # Random point generation
+    vals = []
+    count = 0
+
+    for i in range(N):
+        x,y = area_points()
+        if x*x + y*y < 1.0:
+            count += 1
+        r = count / (i+1)
+        vals.append(r*4)
+    return vals
+
+
+
+# VOLUME METHODS
+
+# Generates random values within the volume for x, y, and z.
+# Input: None
+# Output: 3 doubles
+def vol_points():
+    x = random.uniform(-1,1)
+    y = random.uniform(-1,1)
+    z = random.uniform( 0,2)
+    return x,y,z
+
+# Approximates pi using a monte carlo method by checking if points are within
+#   a sphere and cone intersection.
+# Input: N (Iteration Limit)
+# Output: pi (final approximation)
+def mc_volume(N):
+    count = 0
+    for i in range(N):
+        x,y,z = vol_points()
+        if x*x + y*y < z*z and x*x + y*y + (z-1)**2 < 1:
+            count += 1
+    r = count / N
+    return r*8
+
+# Approximates pi using a monte carlo method by checking if points are within
+#   a sphere and cone intersection. Returns the approximated value for every
+#   iteration.
+# Input: N (Iteration Limit)
+# Output: [pi_0, pi_1, ... pi_N]
+def mc_volume_v(N):
+    vals = []
+    count = 0
+    for i in range(N):
+        x,y,z = vol_points()
+        if x*x + y*y < z*z and x**2 + y**2 + (z-1)**2 < 1:
+            count += 1
+        r = count / (i+1) 
+        vals.append(r*8)
+
+    return vals
+\end{lstlisting}
 \end{document}
