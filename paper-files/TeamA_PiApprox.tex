@@ -74,8 +74,63 @@ The goal is to approximate $\pi$ with Python using different methods, and to pro
 % Begin with naming or characterizing the method/approach to be used, perhaps explain the basic idea behind it, to what type of problems it applies, under what conditions, what it achieves, what are its main features, advantages, disadvantages. Justify why it is applicable to this problem, stating clearly any assumptions you need to make about the problem for the method to apply. Name some other methods/approaches one could use, and if/why your method may be preferable.
 
 
-\subsection{Part I}\label{S:3.1}
-Put an explanation of the methodology behind the numerical integration method here, such as where pi comes from in the integral and why.
+\subsection{Numerical Integration}\label{S:3.1}
+For some problems we can’t integrate the function. Instead, we need to approximate the integration. So, we use what we call numerical integration. When we are provided a set of data rather than an explicit function or when it is challenging to locate the antiderivative of the integrand, we apply numerical integration. When it is difficult to identify a closed form of an integral or when we simply need an approximation of the integral value, we typically employ numerical integration to estimate its values.\\
+
+The midpoint rule, trapezoidal rule, and Simpson's rule are the methods for numerical integration that are most frequently used.\\
+
+Two functions are provided for this task.
+\[
+	\int_0^1 4\sqrt{1-x^2}dx
+\]
+\[
+	\int_{-1}^{1} \frac{1}{\sqrt{1-x^2}}dx
+\]
+
+\subsubsection*{Trapezoid Rule}
+The Trapezoidal Rule divides the whole area into smaller trapezoids rather than utilizing rectangles to calculate the area under the curves. This integration determines the area by approximating the region underlying a function's graph as a trapezoid. The left and right sums are averaged out according to this rule.\\
+
+ADD FIGURES\\
+
+As we see from the figure above, we pick points where $\Delta x$ intersect and use these values to solve for the trapezoid function.
+
+Trapezoid Function:
+\[
+	\int_a^b f(x)dx \approx \Delta \left(\frac{1}{2} f(x_0) + \Sigma_{i=1}^{N-1}f(x_i)+\frac{1}{2}f(x_n)\right)
+\]
+where $\Delta x = \frac{b - a}{n}$ and $x_i = a + i\Delta x$
+
+Ex.\\
+\[T_n=\frac{\Delta x}{2}\left(f(x_0) + 2f(x_1) + 2f(x_{n-1} + f(x_n)\right)\]
+\[T_{10}=\frac{\Delta x}{2}\left(f(0) + 2f(0.1) + 2f(0.2) + \cdots + f(1)\right)\]
+\[T_{10}=\frac{0.1}{2}\left(4\sqrt{1-0} 4\sqrt{1-0.1^2} + 4\sqrt{1-0.2^2}+\cdots+4\sqrt{1-1^2}\right)\]
+\[T_{10}=3.1045\]
+
+\subsubsection*{Simpson's $\frac{1}{3}$ Rule}
+The errors for the midpoint and trapezoid rules behave in a highly predictable manner if the function is not linear on a subinterval; they have the opposite sign. For instance, the trapezoid will be too high and the midpoint will be too low if the function is concave up. Thus, it makes reasonable that averaging the trapezoid and midpoint would give a more accurate estimate. However, we can perform better in this instance than a simple average. Using a weighted average will reduce the error. We employ Simpson's, a quadratic polynomial function, to get the appropriate weight.\\
+
+ADD FIGURES\\
+
+As we see from the figure above, we will have the same point as trapezoid where we pick points that $\Delta x$ intersect and use these values to evaluate the Simpson’s function.\\
+
+Simpson's Function:
+\[
+	\int_a^b f(x)dx \approx \frac{\Delta x}{3} \left(f(x_0) + 4\Sigma_{i=1,3,5}^{N-1}f(x_i)+2\Sigma_{i=2,4,6}^{N-2}f(x_i)+f(x_n)\right)
+\]
+where $\Delta x = \frac{b - a}{n}$ and $x_i = a + i\Delta x$
+
+\subsubsection*{Midpoint Rule}
+We run the risk of the values at the endpoints not accurately representing the average value of the function on the subinterval if we use the endpoints of the subintervals to approximate the integral. The midpoint of each subinterval is a location that is significantly more likely to be close to the average.  The midpoint of every subinterval is used here to calculate the sum.\\
+
+ADD FIGURES\\
+
+In the midpoint method, we use the points that occur between $\Delta x$ values and use these in the Midpoint function to find a solution.
+
+Midpoint Function:
+\[
+	\int_a^b f(x)dx \approx \Delta x \Sigma_{i=1}^Nf(x_i)
+\]
+where $\Delta x = \frac{b - a}{n}$ and $x_i = a + i\Delta x$
 
 \subsection{Part II}\label{S:3.2}
 Put an explanation for how and why pi emerges from the alternating series here. The whole `arctan` component and more too.
